@@ -1,0 +1,4 @@
+#!/bin/bash
+BASH_ALIASES=`cat ~/.bash_aliases`
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+echo -e "$BASH_ALIASES\nalias atomy=\". $DIR/atomy/atomy\"" > ~/.bash_aliases
