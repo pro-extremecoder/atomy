@@ -8,7 +8,7 @@ echo "Creating virtual environment"
 if [ ! -d venv ]; then
     python3 -m venv venv
 fi
-echo "Activating virtual environment"
+echo "Activating virtual environment..."
 . venv/bin/activate 
 
 echo "Checking packages..."
@@ -48,5 +48,5 @@ else
     printf "\n${YELLOW}Config${NC} has been added to ${YELLOW}.gitignore${NC} file"
 fi  
 
-printf "\n\nDevelopment build is ${GREEN}ready to use${NC}\n\n"
-printf "${PURPLE}source run-dev${NC}\n\n"
+printf "\n\nDevelopment build is ${GREEN}ready to use :)${NC}\n\n"
+printf "${PURPLE}atomy run-dev${NC}\n\n"

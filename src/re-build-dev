@@ -6,15 +6,22 @@ PURPLE='\033[0;35m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-printf "${YELLOW}Deactivating virtual environment${NC}\n"
-deactivate 
+case `deactivate>/dev/null; echo $?` in 
+    0) 
+    printf "${YELLOW}Deactivating virtual environment${NC}\n"
+    deactivate 
+    ;;
+    *)
+    ;; 
+esac
+
 
 printf "${RED}Deleting virtual environment${NC}\n"
 rm venv -r
 echo "Creating virtual environment"
 python3 -m venv venv
 
-echo "Activating virtual environment"
+echo "Activating virtual environment..."
 . venv/bin/activate 
 
 installed_packages=`pip3 freeze`
@@ -56,5 +63,5 @@ else
 fi
 
 
-printf "\n\nDevelopment re-build was ${GREEN}succesful${NC}\n\n"
-printf "${PURPLE}source run-dev${NC}\n\n"
+printf "\n\nDevelopment re-build was ${GREEN}succesful :)${NC}\n\n"
+printf "${PURPLE}atomy run-dev${NC}\n\n"

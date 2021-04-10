@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ -n "$1" ]; then
+if [ -n "$*" ]; then
     git add -A
-    git commit -m "$1"
+    git commit -m "$*"
     git push
 else
     echo "Please, add comment to your commit :)"
