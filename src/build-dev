@@ -23,8 +23,30 @@ if [ ! -f config ]; then
     read -p "PROXI_HOST: " PROXI_HOST
     read -p "TELEGRAMBOT_TOKEN: " TELEBOT_TOKEN 
     printf "#!/bin/bash\nPROXI_HOST=$PROXI_HOST\nTELEBOT_TOKEN=$TELEBOT_TOKEN" > config
-    
+    printf "Data was added to ${YELLOW}config${NC}"
 fi
+
+
+
+if [ -f .gitignore ]; then
+    GITIGNORE=`cat .gitignore`
+    case `grep -Fx config .gitignore >/dev/null; echo $?` in
+    0)
+        # code if found
+        printf "\n${YELLOW}Config${NC} has been added to ${YELLOW}.gitignore${NC} file"
+        ;;
+    1)
+        echo -e "$GITIGNORE\nconfig" > .gitignore
+        printf "\n${YELLOW}Config${NC} has been added to ${YELLOW}.gitignore${NC} file"
+        ;;
+    *)
+        printf "${RED}Adding config to .gitignore file was failed${NC}"
+        ;;
+    esac
+else
+    echo -e "config" > .gitignore
+    printf "\n${YELLOW}Config${NC} has been added to ${YELLOW}.gitignore${NC} file"
+fi  
 
 printf "\n\nDevelopment build is ${GREEN}ready to use${NC}\n\n"
 printf "${PURPLE}source run-dev${NC}\n\n"

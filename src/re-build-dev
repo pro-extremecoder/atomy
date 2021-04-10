@@ -1,5 +1,6 @@
 #!/bin/bash
 
+RED='\033[0;31m'
 YELLOW='\033[0;33m'
 PURPLE='\033[0;35m'
 GREEN='\033[0;32m'
@@ -31,6 +32,28 @@ printf "\
 PROXI_HOST=$PROXI_HOST\n\
 TELEBOT_TOKEN=$TELEBOT_TOKEN\
 " > config
+
+printf "Data was added to ${YELLOW}config${NC}"
+
+if [ -f .gitignore ]; then
+    GITIGNORE=`cat .gitignore`
+    case `grep -Fx config .gitignore >/dev/null; echo $?` in
+    0)
+        # code if found
+        printf "\n${YELLOW}Config${NC} has been added to ${YELLOW}.gitignore${NC} file"
+        ;;
+    1)
+        echo -e "$GITIGNORE\nconfig" > .gitignore
+        printf "\n${YELLOW}Config${NC} has been added to ${YELLOW}.gitignore${NC} file"
+        ;;
+    *)
+        printf "${RED}Adding config to .gitignore file was failed${NC}"
+        ;;
+    esac
+else
+    echo -e "config" > .gitignore
+    printf "\n${YELLOW}Config${NC} has been added to ${YELLOW}.gitignore${NC} file"
+fi
 
 
 printf "\n\nDevelopment re-build was ${GREEN}succesful${NC}\n\n"
