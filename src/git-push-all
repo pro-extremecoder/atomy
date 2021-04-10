@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ -n "$1" ]; then
+    git add -A
+    git commit -m "$1"
+    git push
+else
+    echo "Please, add comment to your commit :)"
+fi
