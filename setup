@@ -1,4 +1,23 @@
 #!/bin/bash
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
 BASH_ALIASES=`cat ~/.bash_aliases`
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-echo -e "$BASH_ALIASES\nalias atomy=\". $DIR/src/atomy\"" > ~/.bash_aliases
+
+case `grep -Fx "alias atomy=\". $DIR/src/atomy\"" ~/.bash_aliases >/dev/null; echo $?` in
+    0)
+        printf "Atomy setup was ${GREEN}successful${NC}\n"
+        exec bash
+        ;;
+    1)
+        echo -e "$BASH_ALIASES\nalias atomy=\". $DIR/src/atomy\"" > ~/.bash_aliases
+        printf "Atomy setup was ${GREEN}successful${NC}\n"
+        exec bash
+        ;;
+    *)
+        printf "Atomy setup was ${RED}failed${NC}\n"
+        ;;
+esac
