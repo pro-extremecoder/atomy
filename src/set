@@ -1,0 +1,37 @@
+#!/bin/bash
+PURPLE='\033[0;36m'
+NC='\033[0m'
+
+new_config=""
+str=`cat -e config`
+
+number_of_lines=`echo $str | awk -F"$" '{ print NF-1}'`
+let number_of_lines+=1
+
+k=0
+flag=true
+while IFS="" read -r p || [ -n "$p" ]
+do
+    let k+=1
+
+    field=`echo "$p" | cut -d'=' -f 1`
+    if [ "$1" = "$field" ]; then
+        flag=false
+        if [ "$k" != "$number_of_lines" ]; then
+            new_config+="$1=$2\n"
+        else
+            new_config+="$1=$2"
+        fi
+    else
+        if [ "$k" != "$number_of_lines" ]; then
+            new_config+="$p\n"
+        else
+           new_config+="$p"
+        fi 
+    fi
+done < config
+if $flag; then
+    printf "${PURPLE}$1${NC} wasn't found in config :(\n"
+else
+    printf  $new_config > config
+fi
